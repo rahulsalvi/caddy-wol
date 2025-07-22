@@ -1,15 +1,13 @@
-{
-	order wake_on_lan before respond
-}
-
 :{$PORT} {
 	reverse_proxy {$PROXY_HOST}
 	handle_errors {
 		@502 expression {err.status_code} == 502
 		handle @502 {
-			wake_on_lan {$WOL_MAC} {$WOL_BROADCAST_ADDR}
-			reverse_proxy {$PROXY_HOST} {
-				lb_try_duration 120s
+			route {
+				wake_on_lan {$WOL_MAC} {$WOL_BROADCAST_ADDR}
+				reverse_proxy {$PROXY_HOST} {
+					lb_try_duration 120s
+				}
 			}
 		}
 	}
