@@ -1,0 +1,13 @@
+# vim: ft=yaml.docker-compose
+services:
+  caddy-wol:
+    image: ghcr.io/rahulsalvi/caddy-wol:latest
+    environment:
+      PORT: ${PORT}
+      PROXY_HOST: ${PROXY_HOST}
+      WOL_MAC: ${WOL_MAC}
+      WOL_BROADCAST_ADDR: ${WOL_BROADCAST_ADDR}
+    cap_add:
+      - NET_ADMIN
+    network_mode: host
+    restart: unless-stopped
